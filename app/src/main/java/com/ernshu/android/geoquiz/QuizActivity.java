@@ -9,39 +9,20 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class QuizActivity extends AppCompatActivity {
 
     private Button mTrueButton; //remember to use lowercase for using special syntax commands.
     private Button mFalseButton;// step one declare the memory to hold button.
-    private Button mNextButton;
-    private TextView mQuestionTextView;
-
-    Question[] mQuestionBank = new Question[] {
-        new Question(R.string.question_ocean, true),
-        new Question(R.string.question_mideast, false),
-        new Question(R.string.question_africa, false),
-        new Question(R.string.question_america, true),
-        new Question(R.string.question_asia, true),
-    };
-
-    private int mCurrentIndex = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
-        int question = mQuestionBank[mCurrentIndex].getTextResId();
-        mQuestionTextView.setText(question);
-
-
-
         mTrueButton = (Button) findViewById(R.id.true_button); //  step two make it equal to ID in memory
+
         mTrueButton.setOnClickListener(new View.OnClickListener() { // step three create producer or action.
             @Override
             public void onClick(View v)
