@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.security.PublicKey;
+
 public class QuizActivity extends AppCompatActivity {
 
     private Button mTrueButton; //remember to use lowercase for using special syntax commands.
@@ -67,7 +69,16 @@ private int mCurrentIndex = 0;
                        Toast.LENGTH_SHORT).show();
             }
         });
-
+mNextButton = (Button) findViewById(R.id.next_button); /* I need to find more information on what
+        putting the information on parenthesis around Button means. */
+        mNextButton.setOnClickListener(new View.OnClickListener() {
+   @Override
+     Public void onClick(View v) {
+     mCurrentIndex = (mCurrentIndex +1) % mQuestionsBank.length
+      int question = mQuestionBank[mCurrentIndex].getTextResId();
+    mQuestionTextView.setText(question);
+                                           }
+                                       });
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
