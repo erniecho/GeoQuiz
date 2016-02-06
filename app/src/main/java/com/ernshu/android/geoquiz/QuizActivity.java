@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.security.PublicKey;
 
 public class QuizActivity extends AppCompatActivity {
@@ -36,6 +35,18 @@ private void updateQuestion() {
     int question = mQuestionBank[mCurrentIndex].getTextResId();
     mQuestionTextView.setText(question);
 }
+
+    private void checkAnswer(boolean userPressedTrue) {
+        boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
+                int messageResId = 0;
+                if (userPressedTrue == answerIsTrue){
+                    messageResId = R.string.correct_toast;
+                } else {
+                    messageResId = R.string.incorrect_toast;
+                }
+        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT)
+                .show();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,9 +66,10 @@ private void updateQuestion() {
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(QuizActivity.this,    // step four create a toast action inside the method.
+               /* Toast.makeText(QuizActivity.this,    // step four create a toast action inside the method.
                                 R.string.incorrect_toast,
-                                Toast.LENGTH_SHORT).show();
+                                Toast.LENGTH_SHORT).show();    */
+                checkAnswer(true);
             }
         });
 
@@ -67,9 +79,10 @@ private void updateQuestion() {
             @Override
             public void onClick(View v)
             {
-               Toast.makeText(QuizActivity.this,
+               /* Toast.makeText(QuizActivity.this,
                        R.string.correct_toast,
-                       Toast.LENGTH_SHORT).show();
+                       Toast.LENGTH_SHORT).show(); */
+                checkAnswer(false);
             }
         });
 mNextButton = (Button) findViewById(R.id.next_button); /* I need to find more information on what
