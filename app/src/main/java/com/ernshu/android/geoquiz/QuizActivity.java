@@ -22,7 +22,7 @@ public class QuizActivity extends AppCompatActivity {
     private TextView mQuestionTextView;
 
 // Question[] is created from the class and pointer is aimed at new object created.
-    private Question[] mQuestionsBank = new Question[] {
+    private Question[] mQuestionBank = new Question[] {
             new Question(R.string.question_ocean, true),
             new Question(R.string.question_mideast, false),
             new Question(R.string.question_africa, false),
@@ -32,7 +32,10 @@ public class QuizActivity extends AppCompatActivity {
 
 private int mCurrentIndex = 0;
 
-
+private void updateQuestion() {
+    int question = mQuestionBank[mCurrentIndex].getTextResId();
+    mQuestionTextView.setText(question);
+}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,8 +43,8 @@ private int mCurrentIndex = 0;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
-        int Question = mQuestionsBank[mCurrentIndex].getTextResId();
-        mQuestionTextView.setText(Question);
+        //int Question = mQuestionBank[mCurrentIndex].getTextResId();
+        //mQuestionTextView.setText(Question);
 
 
         mTrueButton = (Button) findViewById(R.id.true_button); //  step two make it equal to ID in memory
@@ -71,14 +74,16 @@ private int mCurrentIndex = 0;
         });
 mNextButton = (Button) findViewById(R.id.next_button); /* I need to find more information on what
         putting the information on parenthesis around Button means. */
-        mNextButton.setOnClickListener(new View.OnClickListener() {
+mNextButton.setOnClickListener(new View.OnClickListener() {
    @Override
-     Public void onClick(View v) {
-     mCurrentIndex = (mCurrentIndex +1) % mQuestionsBank.length
-      int question = mQuestionBank[mCurrentIndex].getTextResId();
-    mQuestionTextView.setText(question);
+     public void onClick(View v) {
+     mCurrentIndex = (mCurrentIndex +1) % mQuestionBank.length;
+     // int question = mQuestionBank[mCurrentIndex].getTextResId();
+    //  mQuestionTextView.setText(question);
+       updateQuestion();
                                            }
                                        });
+        updateQuestion();
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
