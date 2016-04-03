@@ -5,20 +5,24 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.security.PublicKey;
+// import java.security.PublicKey;
 
 public class QuizActivity extends AppCompatActivity {
 
     private Button mTrueButton; //remember to use lowercase for using special syntax commands.
     private Button mFalseButton;// step one declare the memory to hold button.
-    private Button mNextButton;
+    private ImageButton mNextButton;
     private TextView mQuestionTextView;
+    private static final String TAG = "QuizActivity";
+    private static final String KEY_INDEX = "index"; // added string to hold index of what question.
 
 // Question[] is created from the class and pointer is aimed at new object created.
     private Question[] mQuestionBank = new Question[] {
@@ -48,8 +52,9 @@ private void updateQuestion() {
                 .show();
     }
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate(Bundle) called");
         setContentView(R.layout.activity_quiz);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -85,7 +90,7 @@ private void updateQuestion() {
                 checkAnswer(false);
             }
         });
-mNextButton = (Button) findViewById(R.id.next_button); /* I need to find more information on what
+mNextButton = (ImageButton) findViewById(R.id.next_button); /* I need to find more information on what
         putting the information on parenthesis around Button means. */
 mNextButton.setOnClickListener(new View.OnClickListener() {
    @Override
@@ -93,10 +98,16 @@ mNextButton.setOnClickListener(new View.OnClickListener() {
      mCurrentIndex = (mCurrentIndex +1) % mQuestionBank.length;
      // int question = mQuestionBank[mCurrentIndex].getTextResId();
     //  mQuestionTextView.setText(question);
+       // check the state of savedInstance not equal to null get index.
        updateQuestion();
                                            }
                                        });
         updateQuestion();
+
+        if (savedInstanceState != null) {
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+        }
+
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -110,12 +121,49 @@ mNextButton.setOnClickListener(new View.OnClickListener() {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "onSaveInstanceState");
+        savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+// adding tag in Cycle methods.
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart() called");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause() called");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume() called");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop() called");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy() called");
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
